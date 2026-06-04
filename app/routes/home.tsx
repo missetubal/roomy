@@ -11,14 +11,14 @@ export function meta({}: Route.MetaArgs) {
     { name: 'description', content: 'Welcome to React Router!' },
   ];
 }
-const navigate = useNavigate();
-const handleUploadComplete = async (base64SImage: string) => {
-  const newId = Date.now().toString();
-  navigate(`/visualizer/${newId}`, { state: { image: base64SImage } });
-  return true;
-};
 
 export default function Home() {
+  const navigate = useNavigate();
+  const handleUploadComplete = async (base64SImage: string) => {
+    const newId = Date.now().toString();
+    navigate(`/visualizer/${newId}`, { state: { image: base64SImage } });
+    return true;
+  };
   return (
     <div className='home'>
       <Navbar />

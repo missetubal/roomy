@@ -23,19 +23,18 @@ const Upload = ({ onComplete }: { onComplete: (base64: string) => void }) => {
     }
   };
 
-  // const onComplete = useCallback((base64: string) => {
-  //   // Intentionally minimal: current Upload component has no navigation hook.
-  //   // Replace with real redirect/action when wired by the parent route.
-  //   // eslint-disable-next-line no-console
-  //   console.log('Upload complete (base64):', base64.slice(0, 80) + '...');
-  // }, []);
-
   const processFile = useCallback(
     (files: FileList | File[]) => {
       if (!isSignedIn) return;
 
       const firstFile = Array.isArray(files) ? files[0] : files[0];
       if (!firstFile) return;
+
+      const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+      if (firstFile.size > MAX_FILE_SIZE) {
+        alert('File size exceeds 10MB limit');
+        return;
+      }
 
       clearProgressInterval();
       setFile(firstFile);
